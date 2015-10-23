@@ -71,7 +71,7 @@ public class Puzzle {
         return blanck;
     }
 
-    public int getHeuristica(){
+    public int getHeuristic(){
         Puzzle solution = new Puzzle();
         int different_positions =0;
 
