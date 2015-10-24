@@ -10,6 +10,10 @@ public class State{
 
     private Puzzle current_puzzle;
 
+    public State(Puzzle puzzle){
+        this.current_puzzle = puzzle;
+    }
+
     public Puzzle getCurrent_puzzle() {
         return current_puzzle;
     }
@@ -22,9 +26,13 @@ public class State{
         return this.current_puzzle.getHeuristic();
     }
 
-    public List<Puzzle> generate_sons(){
+    /*
+    * Gera os puzze filho, monta os estados e retorna uma lista de estados filho
+    *
+    * */
+    public ArrayList<State> generate_sons(){
 
-        List <Puzzle> sons = new ArrayList<Puzzle>();
+        ArrayList <Puzzle> sons = new ArrayList<Puzzle>();
 
         Puzzle top_son = new Puzzle(this.current_puzzle.clone());
         Puzzle down_son = new Puzzle(this.current_puzzle.clone());
@@ -40,33 +48,33 @@ public class State{
         if(left_son.move_left())
             sons.add(left_son);
 
-        return sons;
+        ArrayList<State> states_son = new ArrayList<>();
+
+        for(Puzzle son: sons){
+            states_son.add(new State(son));
+        }
+
+        return states_son;
     }
 
-    //    private float cost;
-//   // private T state_descrip;
-//    private List<Integer> state_descrip;
-//
-//    public State(float cost, ArrayList<Integer> state){
-//
-//        this.cost = cost;
-//        this.state_descrip = new ArrayList<Integer>();
-//        this.state_descrip.addAll(state);
-//    }
-//
-//    public float getCost() {
-//        return cost;
-//    }
-//
-//    public List<Integer> getState_descrip() {
-//        return state_descrip;
-//    }
-//
-//    public void setCost(float cost) {
-//        this.cost = cost;
-//    }
-//
-//    public void setState_descrip(List<Integer> state_descrip) {
-//        this.state_descrip = state_descrip;
-//    }
+    /*
+     * verifica se a matriz do estado corrente eh igual a matriz do estado passado por parametro
+     *
+     * */
+    public void state_iguals(State state){
+    }
+
+    /*
+    * verifica se a funcao de avaliacao do estado corrente é menor que a
+    * funcao de avaliacao do estato passado por parametro
+    * caso seja verdade retorna true, cc retorna false;
+    *
+    * */
+    public boolean evaluation_cost(State state){
+
+       if(this.current_puzzle.getCost_currently() < state.getCurrent_puzzle().getCost_currently())
+           return true;
+       else
+           return false;
+    }
 }

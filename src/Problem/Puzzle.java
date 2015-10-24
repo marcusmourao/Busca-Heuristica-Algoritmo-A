@@ -4,11 +4,18 @@ package Problem;
  * Created by Marcus on 22/10/2015.
  */
 public class Puzzle {
+    
+    private final float cost = 1.0f;
+    
+    
     private int puzzle[][];
     private Position blanck_position;
+    private float cost_currently;
+    private float f_evaluation; /* valor da funcao de avaliação*/
 
+    public Puzzle(float c){
 
-    public Puzzle(){
+        this.cost_currently = c;
         this.puzzle = new int[3][3];
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
@@ -71,8 +78,13 @@ public class Puzzle {
         return blanck;
     }
 
+    /*
+    * Gera a função heuristica do estado corrente
+    *
+    * */
     public int getHeuristic(){
-        Puzzle solution = new Puzzle();
+
+        Puzzle solution = new Puzzle(this.cost_currently); /*custo 1*/
         int different_positions =0;
 
         solution.create_solution();
@@ -84,6 +96,27 @@ public class Puzzle {
 
         }
         return different_positions;
+    }
+
+    public float getCost_currently(){
+        return cost_currently;
+    }
+
+    public void setCost_currently(float c){
+        this.cost_currently = c;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+
+    /*
+    * retorna o custo estimado de chegar a o estado corrente
+    *  f(x) = c(x) + h(x)
+    *
+    * */
+    public float getF_evaluation(){
+        return this.f_evaluation;
     }
 
     public void change(Position a,Position b){
@@ -102,6 +135,10 @@ public class Puzzle {
             change_position.setY(blanck_position.getY()-1);
             change(blanck_position, change_position);
             blanck_position.setY(change_position.getY());
+
+            /*calcula o novo custo corrente*/
+            this.f_evaluation = this.cost_currently+this.cost+getHeuristic();
+                    
             return true;
         }
 
@@ -117,6 +154,10 @@ public class Puzzle {
             change_position.setY(blanck_position.getY()+1);
             change(blanck_position,change_position);
             blanck_position.setY(change_position.getY());
+
+            /*calcula o novo custo corrente*/
+            this.f_evaluation = this.cost_currently+this.cost+getHeuristic();
+
             return true;
         }
 
@@ -132,6 +173,10 @@ public class Puzzle {
             change_position.setY(blanck_position.getY());
             change(blanck_position,change_position);
             blanck_position.setX(change_position.getX());
+
+            /*calcula o novo custo corrente*/
+            this.f_evaluation = this.cost_currently+this.cost+getHeuristic();
+
             return true;
         }
 
@@ -147,13 +192,17 @@ public class Puzzle {
             change_position.setY(blanck_position.getY());
             change(blanck_position,change_position);
             blanck_position.setX(change_position.getX());
+
+            /*calcula o novo custo corrente*/
+            this.f_evaluation = this.cost_currently+this.cost+getHeuristic();
+
             return true;
         }
 
     }
 
     public Puzzle clone() {
-        Puzzle new_puzzle = new Puzzle();
+        Puzzle new_puzzle = new Puzzle(this.cost_currently);
         for(int i=0;i<3;i++){
             for(int j=0; j<3; j++){
                 new_puzzle.puzzle[i][j] = this.puzzle[i][j];

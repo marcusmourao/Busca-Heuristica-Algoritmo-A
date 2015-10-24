@@ -40,7 +40,7 @@ public class Main {
         outro.show_puzzle();
         System.out.println(outro.getBlanck_position().toString());
 
-        System.out.println(outro.getHeuristica());
+        System.out.println(outro.getHeuristic());
 
 
 
