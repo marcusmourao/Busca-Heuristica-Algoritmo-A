@@ -2,7 +2,10 @@ package Problem;
 
 /**
  * Created by Marcus on 22/10/2015.
+ *
+ * Classe Position utilizada para guardar uma posição[x][y] da matriz
  */
+
 public class Position {
     int x;
     int y;

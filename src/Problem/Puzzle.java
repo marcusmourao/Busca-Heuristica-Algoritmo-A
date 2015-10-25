@@ -28,7 +28,9 @@ public class Puzzle {
 
         }
         this.blanck_position = new Position();
+        //Construtor da classe puzzle que cria uma matriz 3x3 e inicializa blanck_position.
     }
+
 
     public Puzzle(Puzzle other_puzze){
         this.puzzle = other_puzze.getPuzzle();
@@ -39,6 +41,8 @@ public class Puzzle {
 
         this.cost_currently  = other_puzze.getCost_currently();
         this.f_evaluation = other_puzze.getF_evaluation();
+
+        //Construtor da classe puzzle que recebe outro puzzle como parâmetro e "clona" o mesmo.
     }
 
     public int[][] getPuzzle() {
@@ -71,6 +75,7 @@ public class Puzzle {
 
         this.blanck_position.setX(findBlanck_position().getX());
         this.blanck_position.setY(findBlanck_position().getY());
+        // Metodo que cria um puzzle idêntico ao puzzle solução
 
     }
 
@@ -94,6 +99,8 @@ public class Puzzle {
             }
         }
         this.f_evaluation = this.cost + getHeuristic();
+
+        //Método cria um puzzle idêntico ao puzzle solução e o embaralha aleatóriamente com os movimentos permitidos
     }
 
     public void show_puzzle(){
@@ -107,6 +114,7 @@ public class Puzzle {
             }
             System.out.println();
         }
+        //Método que exibe um puzzle
     }
 
     public Position findBlanck_position(){
@@ -120,6 +128,7 @@ public class Puzzle {
             }
         }
         return blanck;
+        //Método faz um busca célula à célula na matriz e encontra a posição do espaço em branco
     }
 
     /*
@@ -140,6 +149,7 @@ public class Puzzle {
 
         }
         return different_positions;
+        //Método retorna o número de posições com números diferentes da solução
     }
 
     public float getCost_currently(){
@@ -167,6 +177,8 @@ public class Puzzle {
         int aux  = this.puzzle[a.getX()][a.getY()];
         this.puzzle[a.getX()][a.getY()] = this.puzzle[b.getX()][b.getY()];
         this.puzzle[b.getX()][b.getY()] = aux;
+
+        //Método troca os valores de duas posições da matriz passados por parâmetro
     }
 
     public boolean move_left(){
@@ -185,7 +197,7 @@ public class Puzzle {
                     
             return true;
         }
-
+    //Método movimenta o espaço em branco para a esquerda
     }
 
     public boolean move_right(){
@@ -204,7 +216,7 @@ public class Puzzle {
 
             return true;
         }
-
+    //Método movimenta o espaço em branco para a direita
     }
 
     public boolean move_down(){
@@ -222,7 +234,7 @@ public class Puzzle {
 
             return true;
         }
-
+    //Método movimenta o espaço em branco para baixo
     }
 
     public boolean move_top(){
@@ -241,7 +253,7 @@ public class Puzzle {
 
             return true;
         }
-
+    //Método movimenta o espaço em branco para cima
     }
 
     public Puzzle clone() {
@@ -259,7 +271,7 @@ public class Puzzle {
         new_puzzle.setF_evaluation(this.f_evaluation);
 
         return new_puzzle;
-
+    //Método retorna um puzzle idêntico ao puzzle atual
     }
 
 
@@ -274,6 +286,7 @@ public class Puzzle {
             }
         }
         return true;
+    // Método compara o puzzle atual com um puzzle passado como parâmetro e verifica se eles são idênticos
     }
 
     public int getRow() {
@@ -288,6 +301,7 @@ public class Puzzle {
 
         this.blanck_position.setX(blanck_position.getX());
         this.blanck_position.setY(blanck_position.getY());
+        // Método seta a posição do espaço em branco
     }
 
     public void setF_evaluation(float f_evaluation) {
