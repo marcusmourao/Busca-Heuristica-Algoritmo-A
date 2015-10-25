@@ -1,12 +1,16 @@
 package Problem;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * Created by Marcus on 22/10/2015.
  */
 public class Puzzle {
     
-    private final float cost = 1.0f;
-    
+    public final float cost = 1.0f;
+    public final int row = 3;
+    public final  int col = 3;
     
     private int puzzle[][];
     private Position blanck_position;
@@ -16,21 +20,29 @@ public class Puzzle {
     public Puzzle(float c){
 
         this.cost_currently = c;
-        this.puzzle = new int[3][3];
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                //this.puzzle[i][j] = i*3+j+1;
+        this.puzzle = new int[row][col];
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
                 this.puzzle[i][j] = 0;
             }
 
         }
-
         this.blanck_position = new Position();
     }
 
     public Puzzle(Puzzle other_puzze){
-        this.puzzle = other_puzze.puzzle;
-        this.blanck_position = other_puzze.getBlanck_position();
+        this.puzzle = other_puzze.getPuzzle();
+
+        this.blanck_position = new Position();
+        this.blanck_position.setX(other_puzze.getBlanck_position().getX());
+        this.blanck_position.setY(other_puzze.getBlanck_position().getY());
+
+        this.cost_currently  = other_puzze.getCost_currently();
+        this.f_evaluation = other_puzze.getF_evaluation();
+    }
+
+    public int[][] getPuzzle() {
+        return puzzle;
     }
 
     public void setPuzzle(int[][] puzzle) {
@@ -42,19 +54,43 @@ public class Puzzle {
     }
 
     public void create_solution() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 this.puzzle[i][j] = i * 3 + j + 1;
             }
         }
         this.puzzle[2][2]= -1;
 
-        this.blanck_position = findBlanck_position();
+        this.blanck_position.setX(findBlanck_position().getX());
+        this.blanck_position.setY(findBlanck_position().getY());
+
+    }
+
+    public void create_random_problem(){
+        Random r = new Random();
+        create_solution();
+
+        for (int i=0;i<50;i++){
+            switch (((r.nextInt() % 4)+1)){
+                case 1:
+                    move_down();
+                    break;
+                case 2:
+                    move_top();
+                    break;
+                case 3:
+                    move_left();
+                    break;
+                case 4:
+                    move_right();
+            }
+        }
+        this.f_evaluation = this.cost + getHeuristic();
     }
 
     public void show_puzzle(){
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
                 if(this.puzzle[i][j]==-1)
                     System.out.print(" " + " ");
                 else
@@ -67,8 +103,8 @@ public class Puzzle {
 
     public Position findBlanck_position(){
         Position blanck = new Position();
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
                 if(this.puzzle[i][j]==-1){
                     blanck.setX(j);
                     blanck.setY(i);
@@ -84,12 +120,12 @@ public class Puzzle {
     * */
     public int getHeuristic(){
 
-        Puzzle solution = new Puzzle(this.cost_currently); /*custo 1*/
+        Puzzle solution = new Puzzle(this.cost); /*custo 1*/
         int different_positions =0;
 
         solution.create_solution();
-        for (int i=0; i<3; i++){
-            for (int j=0; j<3; j++){
+        for (int i=0; i<row; i++){
+            for (int j=0; j<col; j++){
                 if(solution.puzzle[i][j]!=this.puzzle[i][j])
                     different_positions++;
             }
@@ -164,10 +200,9 @@ public class Puzzle {
     }
 
     public boolean move_down(){
-        if(blanck_position.getX()==2)
+        if(this.blanck_position.getX()==2) {
             return false;
-        else
-        {
+        }else{
             Position change_position = new Position();
             change_position.setX(blanck_position.getX()+1);
             change_position.setY(blanck_position.getY());
@@ -203,17 +238,52 @@ public class Puzzle {
 
     public Puzzle clone() {
         Puzzle new_puzzle = new Puzzle(this.cost_currently);
-        for(int i=0;i<3;i++){
-            for(int j=0; j<3; j++){
+        for(int i=0;i<row;i++){
+            for(int j=0; j<col; j++){
                 new_puzzle.puzzle[i][j] = this.puzzle[i][j];
             }
         }
 
-        new_puzzle.blanck_position = this.getBlanck_position();
+        new_puzzle.blanck_position.setX(this.getBlanck_position().getX());
+        new_puzzle.blanck_position.setY(this.getBlanck_position().getY());
+
+        new_puzzle.setCost_currently(this.cost_currently);
+        new_puzzle.setF_evaluation(this.f_evaluation);
 
         return new_puzzle;
 
     }
 
+
+    public boolean equals_puzze(Puzzle puzzle){
+
+        int matriz[][] = puzzle.getPuzzle();
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(this.puzzle[i][j] != matriz[i][j]){
+                    return  false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setBlanck_position(Position blanck_position) {
+
+        this.blanck_position.setX(blanck_position.getX());
+        this.blanck_position.setY(blanck_position.getY());
+    }
+
+    public void setF_evaluation(float f_evaluation) {
+        this.f_evaluation = f_evaluation;
+    }
 }
 

@@ -20,13 +20,12 @@ public class A {
         open_states = new ArrayList<State>();
         close_states = new ArrayList<State>();
 
-        this.goal_state = null;
 
         this.goal_state = goal;
         open_states.add(init_state);
     }
 
-    public void resolve(){
+    public State resolve(){
 
         State state_currently = null;
         ArrayList<State> states_son = new ArrayList<State>();
@@ -34,10 +33,26 @@ public class A {
 
         while(!open_states.isEmpty()){
 
+            //TODO EXCLUIR
+            System.out.println("----- lista de abertos");
+            show_list(open_states);
+            //TODO EXCLUIR
+            System.out.println("----- lista de fechados");
+            show_list(close_states);
+
+
             state_currently = open_states.get(0);
             open_states.remove(0);
 
+            if(state_currently.state_iguals(this.goal_state)){
+                break;
+            }
+
             states_son.addAll(state_currently.generate_sons());
+
+            //TODO EXCLUIR
+            System.out.println("----- filhos");
+            show_list(states_son);
 
             for (State s: states_son){
                 /*
@@ -86,8 +101,10 @@ public class A {
                 }
             }
             close_states.add(state_currently);
-            quick_sort(open_states);
+            sort(open_states);
+            states_son.clear();
         }
+        return state_currently;
     }
 
     /*
@@ -96,15 +113,45 @@ public class A {
     private int contain(ArrayList<State> list, State state){
 
         int position = -1;
+        for (int i = 0; i < list.size() ; i++) {
 
+            if(list.get(i).state_iguals(state)){
+                position = i;
+            }
+        }
         return position;
     }
 
-    private void quick_sort(ArrayList<State> list){
+    private void sort(ArrayList<State> list){
 
+        ArrayList<State> new_list =  new ArrayList<>();
 
+        while(!list.isEmpty()){
+            /*acha o menor da lista*/
+            State s_menor = list.get(0);
+            int position=0;
+            for (int i = 1; i < list.size(); i++) {
+                if(list.get(i).getCurrent_puzzle().getF_evaluation() <
+                        s_menor.getCurrent_puzzle().getF_evaluation()){
+                    s_menor = list.get(i);
+                    position = i;
+                }
+            }
+            list.remove(position);
+            new_list.add(0,s_menor);
+        }
+        list.clear();
+        list.addAll(new_list);
     }
 
-
-
+    //TODO teste lembrar de excluir
+    private void show_list(ArrayList<State> list){
+//        System.out.println(" ------------");
+        for (State s: list){
+            s.getCurrent_puzzle().show_puzzle();
+            System.out.println(s.getCurrent_puzzle().getBlanck_position());
+            System.out.println();
+        }
+//        System.out.println(" ------------");
+    }
 }

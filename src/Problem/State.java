@@ -34,10 +34,25 @@ public class State{
 
         ArrayList <Puzzle> sons = new ArrayList<Puzzle>();
 
-        Puzzle top_son = new Puzzle(this.current_puzzle.clone());
-        Puzzle down_son = new Puzzle(this.current_puzzle.clone());
+        Puzzle top_son   = new Puzzle(this.current_puzzle.clone());
+        Puzzle down_son  = new Puzzle(this.current_puzzle.clone());
         Puzzle right_son = new Puzzle(this.current_puzzle.clone());
-        Puzzle left_son = new Puzzle(this.current_puzzle.clone());
+        Puzzle left_son  = new Puzzle(this.current_puzzle.clone());
+
+//        //TODO EXCLUIR
+//        System.out.println("--- top, down, right, left");
+//        top_son.show_puzzle();
+//        System.out.println(this.current_puzzle.getBlanck_position());
+//        System.out.println(" ");
+//        down_son.show_puzzle();
+//        System.out.println(this.current_puzzle.getBlanck_position());
+//        System.out.println(" ");
+//        right_son.show_puzzle();
+//        System.out.println(this.current_puzzle.getBlanck_position());
+//        System.out.println(" ");
+//        left_son.show_puzzle();
+//        System.out.println(this.current_puzzle.getBlanck_position());
+//        System.out.println(" ");
 
         if(top_son.move_top())
             sons.add(top_son);
@@ -61,8 +76,13 @@ public class State{
      * verifica se a matriz do estado corrente eh igual a matriz do estado passado por parametro
      *
      * */
-    public void state_iguals(State state){
+    public boolean state_iguals(State state){
+        if(this.current_puzzle.equals_puzze(state.getCurrent_puzzle())){
+            return true;
+        }else
+            return  false;
     }
+
 
     /*
     * verifica se a funcao de avaliacao do estado corrente é menor que a
@@ -71,7 +91,6 @@ public class State{
     *
     * */
     public boolean evaluation_cost(State state){
-
        if(this.current_puzzle.getCost_currently() < state.getCurrent_puzzle().getCost_currently())
            return true;
        else
