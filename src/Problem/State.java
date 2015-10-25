@@ -39,21 +39,6 @@ public class State{
         Puzzle right_son = new Puzzle(this.current_puzzle.clone());
         Puzzle left_son  = new Puzzle(this.current_puzzle.clone());
 
-//        //TODO EXCLUIR
-//        System.out.println("--- top, down, right, left");
-//        top_son.show_puzzle();
-//        System.out.println(this.current_puzzle.getBlanck_position());
-//        System.out.println(" ");
-//        down_son.show_puzzle();
-//        System.out.println(this.current_puzzle.getBlanck_position());
-//        System.out.println(" ");
-//        right_son.show_puzzle();
-//        System.out.println(this.current_puzzle.getBlanck_position());
-//        System.out.println(" ");
-//        left_son.show_puzzle();
-//        System.out.println(this.current_puzzle.getBlanck_position());
-//        System.out.println(" ");
-
         if(top_son.move_top())
             sons.add(top_son);
         if(down_son.move_down())

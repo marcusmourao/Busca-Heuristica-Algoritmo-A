@@ -33,12 +33,12 @@ public class A {
 
         while(!open_states.isEmpty()){
 
-            //TODO EXCLUIR
-            System.out.println("----- lista de abertos");
-            show_list(open_states);
-            //TODO EXCLUIR
-            System.out.println("----- lista de fechados");
-            show_list(close_states);
+//            //TODO EXCLUIR
+//            System.out.println("----- lista de abertos");
+//            show_list(open_states);
+//            //TODO EXCLUIR
+//            System.out.println("----- lista de fechados");
+//            show_list(close_states);
 
 
             state_currently = open_states.get(0);
@@ -50,9 +50,9 @@ public class A {
 
             states_son.addAll(state_currently.generate_sons());
 
-            //TODO EXCLUIR
-            System.out.println("----- filhos");
-            show_list(states_son);
+//            //TODO EXCLUIR
+//            System.out.println("----- filhos");
+//            show_list(states_son);
 
             for (State s: states_son){
                 /*
@@ -138,7 +138,7 @@ public class A {
                 }
             }
             list.remove(position);
-            new_list.add(0,s_menor);
+            new_list.add(s_menor);
         }
         list.clear();
         list.addAll(new_list);
@@ -146,12 +146,10 @@ public class A {
 
     //TODO teste lembrar de excluir
     private void show_list(ArrayList<State> list){
-//        System.out.println(" ------------");
         for (State s: list){
             s.getCurrent_puzzle().show_puzzle();
             System.out.println(s.getCurrent_puzzle().getBlanck_position());
             System.out.println();
         }
-//        System.out.println(" ------------");
     }
 }

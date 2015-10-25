@@ -12,10 +12,17 @@ public class Main {
 
         System.out.println("---Busca Heuristica---");
 
+//        Puzzle p =  new Puzzle(1.0f);
+//        int m[][] = {{1,2,3},{4,5,-1},{7,8,6}};
+//        p.setPuzzle(m);
+//        Solution sol = new Solution(p);
 
         Solution sol = new Solution();
+        System.out.println("-- Estado inicial --");
         sol.showInit_puzzle();
+        System.out.println("-- Estado objetivo --");
         sol.showSolution();
+        System.out.println("-- Estado final gerado pelo algoritmo --");
         sol.generate_solution();
 
 //        teste.create_solution();

@@ -18,7 +18,8 @@ public class Solution {
     }
 
     public Solution(Puzzle init){
-        this.init_puzzle = init;
+        this.init_puzzle = new Puzzle(init.cost);
+        this.init_puzzle.setPuzzle(init.getPuzzle());
         this.solution =  new Puzzle(cost);
         this.solution.create_solution();
     }
@@ -46,6 +47,7 @@ public class Solution {
     }
 
     public void setInit_puzzle(Puzzle init_puzzle) {
+
         this.init_puzzle = init_puzzle;
     }
 

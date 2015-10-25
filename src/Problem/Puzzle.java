@@ -46,7 +46,15 @@ public class Puzzle {
     }
 
     public void setPuzzle(int[][] puzzle) {
+
         this.puzzle = puzzle;
+
+        this.blanck_position.setX(findBlanck_position().getX());
+        this.blanck_position.setY(findBlanck_position().getY());
+
+        this.f_evaluation = this.cost_currently+getHeuristic();
+
+
     }
 
     public Position getBlanck_position() {
@@ -106,8 +114,8 @@ public class Puzzle {
         for(int i=0;i<row;i++){
             for(int j=0;j<col;j++){
                 if(this.puzzle[i][j]==-1){
-                    blanck.setX(j);
-                    blanck.setY(i);
+                    blanck.setX(i);
+                    blanck.setY(j);
                 }
             }
         }
