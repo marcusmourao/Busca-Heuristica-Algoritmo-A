@@ -33,14 +33,6 @@ public class A {
 
         while(!open_states.isEmpty()){
 
-//            //TODO EXCLUIR
-//            System.out.println("----- lista de abertos");
-//            show_list(open_states);
-//            //TODO EXCLUIR
-//            System.out.println("----- lista de fechados");
-//            show_list(close_states);
-
-
             state_currently = open_states.get(0);
             open_states.remove(0);
 
@@ -50,9 +42,6 @@ public class A {
 
             states_son.addAll(state_currently.generate_sons());
 
-//            //TODO EXCLUIR
-//            System.out.println("----- filhos");
-//            show_list(states_son);
 
             for (State s: states_son){
                 /*
@@ -144,12 +133,4 @@ public class A {
         list.addAll(new_list);
     }
 
-    //TODO teste lembrar de excluir
-    private void show_list(ArrayList<State> list){
-        for (State s: list){
-            s.getCurrent_puzzle().show_puzzle();
-            System.out.println(s.getCurrent_puzzle().getBlanck_position());
-            System.out.println();
-        }
-    }
 }
